@@ -38,4 +38,4 @@ async function calculatePrice(organizationId, zone, distance, itemType) {
 module.exports = { calculatePrice };
 
 
-module.exports = { calculatePrice };*/
+module.exports = { calculatePrice };
