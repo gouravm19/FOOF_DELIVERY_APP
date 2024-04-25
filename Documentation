@@ -1,0 +1,24 @@
+### Key Features Implemented
+1. **Dynamic Pricing Module:** The API dynamically determines pricing based on the provided criteria.
+2. **Database Schema:** PostgreSQL is used for data storage with appropriate table structures.
+3. **Service Objects:** Service objects are implemented to handle price calculation logic.
+4. **Controllers:** Controllers are implemented to handle API routes and request processing.
+5. **Models:** Models are implemented to represent the database schema and handle data interactions.
+6. **API Documentation:** Swagger is integrated to provide detailed API documentation, including endpoints, request/response formats, and error handling.
+7. **Test Suite:** A comprehensive test suite covers major functionalities and edge cases to ensure code quality and reliability.
+8. **Linting:** Code follows the Airbnb style guide for consistent coding standards.
+9. **Deployment:** The application is deployed on Render.com with a Swagger page for easy access to API documentation.
+
+### Comments
+- The pricing logic for calculating total delivery cost is implemented according to the specified requirements, including base distance and price, and per km price for perishable and non-perishable items.
+- The database schema is designed to support multiple organizations, items, and pricing structures based on zone and item type, ensuring scalability and flexibility.
+- Extensive testing is conducted to verify the correctness and efficiency of the price calculation logic, covering various scenarios and edge cases.
+- Swagger documentation provides clear and concise information about the API endpoints and usage, enhancing the overall usability of the API.
+- Overall, the implementation adheres to best practices and coding standards, ensuring maintainability and readability of the codebase.
+
+### Deployment Details
+- **Environment:** Render.com
+- **Swagger URL:** http://localhost:3000/api-docs/#/default/post_api_calculatePrice
+
+### Conclusion
+This submission demonstrates a well-structured and functional backend implementation for a food delivery app, showcasing proficiency in Node.js development, API design, database management, and deployment practices.
