@@ -10,7 +10,7 @@ This is the backend for a food delivery app. It provides APIs for calculating de
 
 ## API Documentation
 
-API documentation is available at `/api-docs` endpoint when the server is running. You can view it in your browser.
+API documentation is available at `http://localhost:3000/api-docs` endpoint when the server is running. You can view it in your browser.
 
 ## Testing
 
