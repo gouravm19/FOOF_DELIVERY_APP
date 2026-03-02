@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodFlow Visual Mockups - All Pages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0e1a;
+            color: #f1f5f9;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #e23744;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+        
+        nav {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        nav a {
+            color: #f1f5f9;
+            text-decoration: none;
+            padding: 8px 16px;
+            background: #334155;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background: #e23744;
+            transform: translateY(-2px);
+        }
+        
+        .section {
+            margin-bottom: 80px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #e23744;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #334155;
+        }
+        
+        .mockup-container {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .mockup-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .phone-mockup {
+            max-width: 375px;
+            margin: 0 auto;
+            background: #0f172a;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 0 0 8px #334155, 0 30px 60px rgba(0, 0, 0, 0.7);
+        }
+        
+        .phone-notch {
+            height: 30px;
+            background: #0f172a;
+            border-radius: 0 0 12px 12px;
+            margin: 0 auto;
+            width: 150px;
+        }
+        
+        .phone-screen {
+            background: #0f172a;
+            min-height: 600px;
+        }
+        
+        .desktop-mockup {
+            background: #0f172a;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px #334155, 0 30px 60px rgba(0, 0, 0, 0.7);
+        }
+        
+        .topbar {
+            background: #1e293b;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .logo {
+            color: #e23744;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #e23744;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #c72f3a;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #334155;
+            color: #f1f5f9;
+        }
+        
+        .input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #f1f5f9;
+            font-size: 1rem;
+        }
+        
+        .card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #334155;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: #22c55e;
+            color: white;
+        }
+        
+        .badge-warning {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .badge-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #475569;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e23744;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .veg-icon {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #22c55e;
+            border-radius: 2px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .veg-icon::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+        
+        .nonveg-icon {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #ef4444;
+            border-radius: 2px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .nonveg-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 7px solid #ef4444;
+            position: absolute;
+            top: 1px;
+            left: 1px;
+        }
+        
+        .rating {
+            color: #fbbf24;
+        }
+        
+        .map-placeholder {
+            background: linear-gradient(135deg, #334155 0%, #475569 100%);
+            height: 300px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            right: 30px;
+            height: 2px;
+            background: #334155;
+            z-index: 0;
+        }
+        
+        .progress-step {
+            text-align: center;
+            z-index: 1;
+        }
+        
+        .progress-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #334155;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        
+        .progress-circle.active {
+            background: #e23744;
+        }
+        
+        .progress-circle.completed {
+            background: #22c55e;
+        }
+        
+        .chart {
+            margin: 20px 0;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 200px;
+            gap: 10px;
+            padding: 10px;
+            background: #0f172a;
+            border-radius: 8px;
+        }
+        
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, #e23744, #f87171);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            min-height: 20px;
+        }
+        
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: #94a3b8;
+            white-space: nowrap;
+        }
+        
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #e23744;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 30px rgba(226, 55, 68, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .floating-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .mockup-container {
+                page-break-inside: avoid;
+                margin-bottom: 100px;
+            }
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍕 FoodFlow Visual Mockups</h1>
+        <p class="subtitle">Production-Grade UI Design • Dark Theme • Realistic Data</p>
+        
+        <nav>
+            <a href="#customer">Customer App (6)</a>
+            <a href="#restaurant">Restaurant Portal (3)</a>
+            <a href="#delivery">Delivery Partner (2)</a>
+            <a href="#admin">Admin Console (2)</a>
+        </nav>
+
+        <!-- CUSTOMER APP -->
+        <section id="customer" class="section">
+            <h2 class="section-title">Customer App Mockups</h2>
+            
+            <!-- 1. Phone OTP Login -->
+            <div class="mockup-container">
+                <div class="mockup-label">Customer App — Login Screen — localhost:3000/auth</div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen" style="padding: 40px 24px;">
+                        <div style="text-align: center; margin-bottom: 60px;">
+                            <div class="logo" style="font-size: 3rem; margin-bottom: 10px;">🍕</div>
+                            <div class="logo" style="font-size: 2rem;">FoodFlow</div>
+                            <p style="color: #94a3b8; margin-top: 10px;">Order food from your favorite restaurants</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; margin-bottom: 8px; color: #cbd5e1;">Phone Number</label>
+                            <input type="tel" class="input" placeholder="+91-9876543210" value="">
+                        </div>
+                        
+                        <button class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1.1rem;">Send OTP</button>
+                        
+                        <p style="text-align: center; color: #64748b; font-size: 0.85rem; margin-top: 30px;">
+                            By continuing, you agree to our<br>
+                            <span style="color: #e23744;">Terms & Privacy Policy</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Home Page -->
+            <div class="mockup-container">
+                <div class="mockup-label">Customer App — Home Page — localhost:3000/</div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <!-- Top Bar -->
+                        <div class="topbar">
+                            <div>
+                                <div style="font-size: 0.75rem; color: #94a3b8;">Deliver to</div>
+                                <div style="font-weight: 600;">📍 Koregaon Park, Pune</div>
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                <div style="width: 40px; height: 40px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                    🛒
+                                </div>
+                                <div style="width: 40px; height: 40px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                    👤
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <!-- Search Bar -->
+                            <div class="input" style="margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                                <span>🔍</span>
+                                <span style="color: #64748b;">Search for restaurants or dishes</span>
+                            </div>
+                            
+                            <!-- Cuisine Categories -->
+                            <div style="display: flex; gap: 12px; overflow-x: auto; margin-bottom: 24px; padding-bottom: 10px;">
+                                <div style="min-width: 80px; text-align: center;">
+                                    <div style="width: 80px; height: 80px; background: #1e293b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 8px; border: 2px solid #334155;">🍕</div>
+                                    <div style="font-size: 0.8rem;">Pizza</div>
+                                </div>
+                                <div style="min-width: 80px; text-align: center;">
+                                    <div style="width: 80px; height: 80px; background: #1e293b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 8px; border: 2px solid #334155;">🍛</div>
+                                    <div style="font-size: 0.8rem;">Biryani</div>
+                                </div>
+                                <div style="min-width: 80px; text-align: center;">
+                                    <div style="width: 80px; height: 80px; background: #1e293b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 8px; border: 2px solid #334155;">🍔</div>
+                                    <div style="font-size: 0.8rem;">Burger</div>
+                                </div>
+                                <div style="min-width: 80px; text-align: center;">
+                                    <div style="width: 80px; height: 80px; background: #1e293b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 8px; border: 2px solid #334155;">🍜</div>
+                                    <div style="font-size: 0.8rem;">Chinese</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Restaurant Cards -->
+                            <h3 style="margin-bottom: 16px;">Restaurants near you</h3>
+                            
+                            <div class="card">
+                                <div style="display: flex; gap: 12px;">
+                                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #e23744, #f87171); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🍛</div>
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                            <div style="font-weight: 600; font-size: 1.1rem;">Biryani House</div>
+                                            <div class="badge badge-success">OFFER</div>
+                                        </div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px;">North Indian, Mughlai, Biryani</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                                            <div><span class="rating">⭐</span> 4.3 (1.2K)</div>
+                                            <div>30-35 mins</div>
+                                            <div>2.3 km</div>
+                                        </div>
+                                        <div style="color: #e23744; font-size: 0.85rem; margin-top: 6px; font-weight: 600;">50% off up to ₹100</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div style="display: flex; gap: 12px;">
+                                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem;">🍕</div>
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                            <div style="font-weight: 600; font-size: 1.1rem;">Pizza Paradise</div>
+                                            <div class="badge" style="background: #22c55e; color: white;">VEG</div>
+                                        </div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px;">Italian, Pizza</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                                            <div><span class="rating">⭐</span> 4.5 (892)</div>
+                                            <div>25-30 mins</div>
+                                            <div>3.1 km</div>
+                                        </div>
+                                        <div style="color: #22c55e; font-size: 0.85rem; margin-top: 6px; font-weight: 600;">Free Delivery</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Restaurant Detail Page -->
+            <div class="mockup-container">
+                <div class="mockup-label">Customer App — Restaurant Detail — localhost:3000/restaurant/biryani-house-koregaon-park</div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <!-- Header Image -->
+                        <div style="height: 180px; background: linear-gradient(135deg, #e23744, #f87171); display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative;">
+                            🍛
+                            <div style="position: absolute; top: 10px; left: 10px; width: 40px; height: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center;">←</div>
+                            <div style="position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center;">⋮</div>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                                <div>
+                                    <h2 style="font-size: 1.5rem; margin-bottom: 6px;">Biryani House</h2>
+                                    <div style="color: #94a3b8; font-size: 0.9rem;">North Indian, Mughlai, Biryani</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 1.2rem; color: #fbbf24;">⭐ 4.3</div>
+                                    <div style="font-size: 0.8rem; color: #94a3b8;">1.2K ratings</div>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 16px; padding: 12px; background: #1e293b; border-radius: 8px; margin-bottom: 16px; font-size: 0.85rem;">
+                                <div>⏱️ 30-35 mins</div>
+                                <div>₹30 delivery</div>
+                                <div style="color: #22c55e;">● Open now</div>
+                            </div>
+                            
+                            <!-- Offers -->
+                            <div class="card" style="background: linear-gradient(135deg, #1e293b, #334155); border: 1px solid #e23744;">
+                                <div style="font-weight: 600; margin-bottom: 8px;">🎉 Offers Available</div>
+                                <div style="font-size: 0.85rem; color: #94a3b8;">50% off up to ₹100 • Use code SAVE50</div>
+                            </div>
+                            
+                            <!-- Menu Categories -->
+                            <div style="display: flex; gap: 12px; border-bottom: 1px solid #334155; margin: 20px 0; overflow-x: auto;">
+                                <div style="padding: 12px 0; border-bottom: 2px solid #e23744; color: #e23744; font-weight: 600; white-space: nowrap;">Biryani</div>
+                                <div style="padding: 12px 16px; color: #94a3b8; white-space: nowrap;">Starters</div>
+                                <div style="padding: 12px 16px; color: #94a3b8; white-space: nowrap;">Main Course</div>
+                                <div style="padding: 12px 16px; color: #94a3b8; white-space: nowrap;">Breads</div>
+                            </div>
+                            
+                            <!-- Menu Items -->
+                            <h3 style="margin-bottom: 16px;">Biryani</h3>
+                            
+                            <div class="card">
+                                <div style="display: flex; gap: 12px;">
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                            <div class="nonveg-icon"></div>
+                                            <div style="font-weight: 600;">Chicken Biryani</div>
+                                            <div class="badge badge-warning" style="font-size: 0.7rem;">BESTSELLER</div>
+                                        </div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px;">Hyderabadi-style biryani with tender chicken pieces...</div>
+                                        <div style="font-weight: 600; color: #f1f5f9; margin-bottom: 12px;">₹299</div>
+                                        <button class="btn btn-primary" style="padding: 6px 20px; font-size: 0.9rem;">Add</button>
+                                    </div>
+                                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🍛</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div style="display: flex; gap: 12px;">
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                            <div class="veg-icon"></div>
+                                            <div style="font-weight: 600;">Veg Biryani</div>
+                                        </div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px;">Fragrant basmati rice with mixed vegetables...</div>
+                                        <div style="font-weight: 600; color: #f1f5f9; margin-bottom: 12px;">₹249</div>
+                                        <button class="btn btn-primary" style="padding: 6px 20px; font-size: 0.9rem;">Add</button>
+                                    </div>
+                                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #22c55e, #86efac); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🍛</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Cart Page -->
+            <div class="mockup-container">
+                <div class="mockup-label">Customer App — Cart Page — localhost:3000/cart</div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="topbar">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div>←</div>
+                                <div style="font-weight: 600; font-size: 1.2rem;">Cart</div>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <!-- Restaurant Info -->
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #334155;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #e23744, #f87171); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🍛</div>
+                                <div>
+                                    <div style="font-weight: 600; font-size: 1.1rem;">Biryani House</div>
+                                    <div style="color: #94a3b8; font-size: 0.85rem;">Koregaon Park, Pune</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Cart Items -->
+                            <div class="card">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                            <div class="nonveg-icon"></div>
+                                            <div style="font-weight: 600;">Chicken Biryani</div>
+                                        </div>
+                                        <div style="color: #94a3b8; font-size: 0.8rem;">Large, Extra Spicy</div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 8px; background: #0f172a; padding: 4px 8px; border-radius: 6px;">
+                                            <button style="background: none; border: none; color: #e23744; font-size: 1.2rem; cursor: pointer; padding: 0 4px;">−</button>
+                                            <span style="font-weight: 600; min-width: 20px; text-align: center;">2</span>
+                                            <button style="background: none; border: none; color: #22c55e; font-size: 1.2rem; cursor: pointer; padding: 0 4px;">+</button>
+                                        </div>
+                                        <div style="font-weight: 600;">₹598</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div style="display: flex; justify-content: space-between; align-items: start;">
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                            <div class="veg-icon"></div>
+                                            <div style="font-weight: 600;">Raita</div>
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 8px; background: #0f172a; padding: 4px 8px; border-radius: 6px;">
+                                            <button style="background: none; border: none; color: #e23744; font-size: 1.2rem; cursor: pointer; padding: 0 4px;">−</button>
+                                            <span style="font-weight: 600; min-width: 20px; text-align: center;">1</span>
+                                            <button style="background: none; border: none; color: #22c55e; font-size: 1.2rem; cursor: pointer; padding: 0 4px;">+</button>
+                                        </div>
+                                        <div style="font-weight: 600;">₹50</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Coupon -->
+                            <div class="card" style="border: 1px dashed #e23744;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.5rem;">🎟️</span>
+                                        <div>
+                                            <div style="font-weight: 600; color: #22c55e;">Coupon Applied: SAVE50</div>
+                                            <div style="font-size: 0.85rem; color: #94a3b8;">You saved ₹50</div>
+                                        </div>
+                                    </div>
+                                    <button style="background: none; border: none; color: #ef4444; cursor: pointer;">✕</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Bill Details -->
+                            <div class="card">
+                                <div style="font-weight: 600; margin-bottom: 12px; font-size: 1.1rem;">Bill Details</div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+                                    <div style="color: #94a3b8;">Item Total</div>
+                                    <div>₹648</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+                                    <div style="color: #94a3b8;">Delivery Fee</div>
+                                    <div>₹30</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+                                    <div style="color: #94a3b8;">Platform Fee</div>
+                                    <div>₹5</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+                                    <div style="color: #94a3b8;">GST (5%)</div>
+                                    <div>₹34.15</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.9rem; color: #22c55e;">
+                                    <div>Coupon Discount</div>
+                                    <div>-₹50</div>
+                                </div>
+                                <div style="border-top: 1px dashed #334155; padding-top: 12px; display: flex; justify-content: space-between; font-weight: 600; font-size: 1.1rem;">
+                                    <div>TO PAY</div>
+                                    <div style="color: #e23744;">₹667.15</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Address -->
+                            <div class="card">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 4px;">📍 Delivery to Home</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem;">Flat 101, Sunshine Apartments, Koregaon Park</div>
+                                    </div>
+                                    <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;">Change</button>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 1.1rem; margin-top: 20px;">
+                                Proceed to Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Order Tracking -->
+            <div class="mockup-container">
+                <div class="mockup-label">Customer App — Order Tracking — localhost:3000/orders/FD-2024-000123</div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="topbar">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div>←</div>
+                                <div style="font-weight: 600; font-size: 1.2rem;">Track Order</div>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <div style="font-size: 0.9rem; color: #94a3b8;">Order #FD-2024-000123</div>
+                                <div style="font-size: 1.5rem; font-weight: 600; margin: 8px 0;">Out for Delivery</div>
+                                <div style="color: #22c55e;">Arriving in 12 minutes</div>
+                            </div>
+                            
+                            <!-- Progress Timeline -->
+                            <div class="progress-bar">
+                                <div class="progress-step">
+                                    <div class="progress-circle completed">✓</div>
+                                    <div style="font-size: 0.7rem; color: #94a3b8;">Placed</div>
+                                </div>
+                                <div class="progress-step">
+                                    <div class="progress-circle completed">✓</div>
+                                    <div style="font-size: 0.7rem; color: #94a3b8;">Confirmed</div>
+                                </div>
+                                <div class="progress-step">
+                                    <div class="progress-circle completed">✓</div>
+                                    <div style="font-size: 0.7rem; color: #94a3b8;">Preparing</div>
+                                </div>
+                                <div class="progress-step">
+                                    <div class="progress-circle active">🚚</div>
+                                    <div style="font-size: 0.7rem; color: #e23744;">On the way</div>
+                                </div>
+                                <div class="progress-step">
+                                    <div class="progress-circle"></div>
+                                    <div style="font-size: 0.7rem; color: #64748b;">Delivered</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Map -->
+                            <div class="map-placeholder">
+                                🗺️ Live Tracking Map<br>
+                                <span style="font-size: 0.9rem;">(Google Maps integration)</span>
+                            </div>
+                            
+                            <!-- Delivery Partner Card -->
+                            <div class="card">
+                                <div style="display: flex; gap: 12px; align-items: center;">
+                                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #334155, #475569); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👤</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600;">Vijay Singh</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem;">Motorbike • MH12AB1234</div>
+                                        <div style="color: #fbbf24; font-size: 0.85rem;">⭐ 4.6</div>
+                                    </div>
+                                    <button class="btn btn-primary" style="padding: 10px 20px; border-radius: 50px;">📞 Call</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Order Summary -->
+                            <div class="card">
+                                <div style="font-weight: 600; margin-bottom: 12px;">Order Summary</div>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                                    <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #e23744, #f87171); border-radius: 6px; display: flex; align-items: center; justify-content: center;">🍛</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600;">Biryani House</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem;">2x Chicken Biryani, 1x Raita</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid #334155;">
+                                    <div style="font-weight: 600;">Total Paid</div>
+                                    <div style="font-weight: 600; color: #22c55e;">₹667.15</div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn btn-secondary" style="width: 100%; padding: 12px; margin-top: 12px;">
+                                Help & Support
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Order History -->
+            <div class="mockup-container">
+                <div class="mockup-label">Customer App — Order History — localhost:3000/orders</div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="topbar">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div>←</div>
+                                <div style="font-weight: 600; font-size: 1.2rem;">My Orders</div>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <!-- Tabs -->
+                            <div style="display: flex; gap: 16px; border-bottom: 1px solid #334155; margin-bottom: 20px;">
+                                <div style="padding: 12px 0; border-bottom: 2px solid #e23744; color: #e23744; font-weight: 600;">Active (1)</div>
+                                <div style="padding: 12px 0; color: #94a3b8;">Past Orders (5)</div>
+                            </div>
+                            
+                            <!-- Active Order -->
+                            <div class="card" style="border: 1px solid #e23744;">
+                                <div style="display: flex; gap: 12px;">
+                                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #e23744, #f87171); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">🍛</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; margin-bottom: 4px;">Biryani House</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px;">2x Chicken Biryani, 1x Raita</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div class="badge badge-warning">OUT FOR DELIVERY</div>
+                                            <div style="font-weight: 600;">₹667.15</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" style="width: 100%; margin-top: 12px;">Track Order</button>
+                            </div>
+                            
+                            <!-- Past Orders -->
+                            <div style="color: #94a3b8; font-size: 0.9rem; margin: 20px 0 12px;">Past Orders</div>
+                            
+                            <div class="card">
+                                <div style="display: flex; gap: 12px;">
+                                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">🍕</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; margin-bottom: 4px;">Pizza Paradise</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px;">1x Margherita Pizza, 1x Garlic Bread</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="font-size: 0.8rem; color: #64748b;">Jan 14, 2024</div>
+                                            <div class="badge badge-success">DELIVERED</div>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                                            <div style="font-weight: 600;">₹450</div>
+                                            <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem;">Reorder</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div style="display: flex; gap: 12px;">
+                                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6, #60a5fa); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">🍔</div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 600; margin-bottom: 4px;">The Burger Lab</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px;">2x Classic Burger, 1x Fries</div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="font-size: 0.8rem; color: #64748b;">Jan 12, 2024</div>
+                                            <div class="badge badge-success">DELIVERED</div>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                                            <div style="font-weight: 600;">₹380</div>
+                                            <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem;">Reorder</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESTAURANT PORTAL -->
+        <section id="restaurant" class="section">
+            <h2 class="section-title">Restaurant Portal Mockups</h2>
+            
+            <!-- 7. Restaurant Dashboard -->
+            <div class="mockup-container">
+                <div class="mockup-label">Restaurant Portal — Dashboard — localhost:3001/</div>
+                <div class="desktop-mockup">
+                    <div class="topbar">
+                        <div class="logo">🍕 FoodFlow Restaurant</div>
+                        <div style="display: flex; gap: 16px; align-items: center;">
+                            <div style="font-weight: 600;">Biryani House</div>
+                            <div style="width: 40px; height: 40px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center;">👤</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex;">
+                        <!-- Sidebar -->
+                        <div style="width: 240px; background: #1e293b; padding: 20px; border-right: 1px solid #334155;">
+                            <div style="padding: 12px; background: #334155; border-radius: 8px; margin-bottom: 8px; font-weight: 600;">📊 Dashboard</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📦 Orders</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📖 Menu</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📈 Analytics</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px;">⚙️ Settings</div>
+                        </div>
+                        
+                        <!-- Main Content -->
+                        <div style="flex: 1; padding: 24px;">
+                            <!-- Stats Cards -->
+                            <div class="grid grid-4" style="margin-bottom: 30px;">
+                                <div class="stat-card">
+                                    <div class="stat-value">47</div>
+                                    <div class="stat-label">Today's Orders</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">₹18,450</div>
+                                    <div class="stat-label">Today's Revenue</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">₹392</div>
+                                    <div class="stat-label">Avg Order Value</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">4.3 ⭐</div>
+                                    <div class="stat-label">Rating</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Real-time Order Stream -->
+                            <h3 style="margin-bottom: 16px;">📢 Live Order Stream</h3>
+                            
+                            <div class="card" style="border: 2px solid #e23744; animation: pulse 2s infinite;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                                    <div>
+                                        <div class="badge badge-danger" style="margin-bottom: 8px;">NEW ORDER</div>
+                                        <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 6px;">Order #FD-2024-000124</div>
+                                        <div style="color: #94a3b8; font-size: 0.9rem;">Just now • Raj S. • +91-******3210</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 1.3rem; font-weight: 600; color: #22c55e; margin-bottom: 4px;">₹648</div>
+                                        <div style="color: #ef4444; font-size: 0.9rem;">⏱️ Auto-reject in 01:45</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #0f172a; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
+                                    <div style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px;">Items:</div>
+                                    <div>• 2x Chicken Biryani (Large, Extra Spicy)</div>
+                                    <div>• 1x Raita</div>
+                                </div>
+                                
+                                <div style="display: flex; gap: 12px;">
+                                    <button class="btn btn-primary" style="flex: 1; padding: 12px; font-size: 1rem;">
+                                        ✓ Accept (Prep time: 20 mins)
+                                    </button>
+                                    <button class="btn btn-secondary" style="flex: 1; padding: 12px; font-size: 1rem;">
+                                        ✕ Reject
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div style="display: flex; justify-content: space-between; align-items: start;">
+                                    <div>
+                                        <div class="badge badge-warning" style="margin-bottom: 8px;">PREPARING</div>
+                                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;">Order #FD-2024-000123</div>
+                                        <div style="color: #94a3b8; font-size: 0.9rem;">5 mins ago • Priya M.</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 1.2rem; font-weight: 600;">₹450</div>
+                                        <button class="btn btn-primary" style="padding: 8px 16px; margin-top: 8px;">Mark Ready</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div style="display: flex; justify-content: space-between; align-items: start;">
+                                    <div>
+                                        <div class="badge badge-success" style="margin-bottom: 8px;">READY FOR PICKUP</div>
+                                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;">Order #FD-2024-000122</div>
+                                        <div style="color: #94a3b8; font-size: 0.9rem;">12 mins ago • Amit K.</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 1.2rem; font-weight: 600;">₹380</div>
+                                        <div style="color: #22c55e; font-size: 0.9rem; margin-top: 8px;">✓ Partner assigned</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. Accept Order Dialog -->
+            <div class="mockup-container">
+                <div class="mockup-label">Restaurant Portal — Accept Order Modal — localhost:3001/orders</div>
+                <div class="desktop-mockup">
+                    <div style="padding: 100px; background: rgba(0,0,0,0.5);">
+                        <div style="max-width: 500px; margin: 0 auto; background: #1e293b; border-radius: 16px; padding: 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.8);">
+                            <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Accept Order #FD-2024-000124?</h2>
+                            
+                            <div class="card" style="margin-bottom: 20px;">
+                                <div style="margin-bottom: 16px;">
+                                    <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 4px;">Customer</div>
+                                    <div style="font-weight: 600;">Raj S. • +91-******3210</div>
+                                </div>
+                                <div style="margin-bottom: 16px;">
+                                    <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 4px;">Items</div>
+                                    <div>2x Chicken Biryani (Large, Extra Spicy)</div>
+                                    <div>1x Raita</div>
+                                </div>
+                                <div>
+                                    <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 4px;">Order Value</div>
+                                    <div style="font-size: 1.3rem; font-weight: 600; color: #22c55e;">₹648</div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 24px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600;">Estimated Preparation Time</label>
+                                <select class="input" style="padding: 12px;">
+                                    <option>10 minutes</option>
+                                    <option>15 minutes</option>
+                                    <option selected>20 minutes</option>
+                                    <option>25 minutes</option>
+                                    <option>30 minutes</option>
+                                </select>
+                                <div style="color: #94a3b8; font-size: 0.85rem; margin-top: 6px;">
+                                    This will set delivery ETA to 40 minutes
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 12px;">
+                                <button class="btn btn-secondary" style="flex: 1; padding: 14px;">Cancel</button>
+                                <button class="btn btn-primary" style="flex: 1; padding: 14px;">Confirm Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Menu Management -->
+            <div class="mockup-container">
+                <div class="mockup-label">Restaurant Portal — Menu Management — localhost:3001/menu</div>
+                <div class="desktop-mockup">
+                    <div class="topbar">
+                        <div class="logo">🍕 FoodFlow Restaurant</div>
+                        <button class="btn btn-primary">+ Add Menu Item</button>
+                    </div>
+                    
+                    <div style="display: flex;">
+                        <!-- Sidebar -->
+                        <div style="width: 240px; background: #1e293b; padding: 20px; border-right: 1px solid #334155;">
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📊 Dashboard</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📦 Orders</div>
+                            <div style="padding: 12px; background: #334155; border-radius: 8px; margin-bottom: 8px; font-weight: 600;">📖 Menu</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📈 Analytics</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px;">⚙️ Settings</div>
+                        </div>
+                        
+                        <!-- Main Content -->
+                        <div style="flex: 1; padding: 24px;">
+                            <!-- Category Tabs -->
+                            <div style="display: flex; gap: 16px; border-bottom: 1px solid #334155; margin-bottom: 24px;">
+                                <div style="padding: 12px 0; border-bottom: 2px solid #e23744; color: #e23744; font-weight: 600;">Biryani (8)</div>
+                                <div style="padding: 12px 16px; color: #94a3b8;">Starters (12)</div>
+                                <div style="padding: 12px 16px; color: #94a3b8;">Main Course (15)</div>
+                                <div style="padding: 12px 16px; color: #94a3b8;">Breads (6)</div>
+                                <div style="padding: 12px 16px; color: #94a3b8;">Desserts (8)</div>
+                            </div>
+                            
+                            <div class="grid grid-2" style="gap: 20px;">
+                                <!-- Menu Item Card 1 -->
+                                <div class="card">
+                                    <div style="display: flex; gap: 16px;">
+                                        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🍛</div>
+                                        <div style="flex: 1;">
+                                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                                <div class="nonveg-icon"></div>
+                                                <div style="font-weight: 600; font-size: 1.1rem;">Chicken Biryani</div>
+                                                <div class="badge badge-warning" style="font-size: 0.7rem;">BESTSELLER</div>
+                                            </div>
+                                            <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px; line-height: 1.4;">Hyderabadi-style biryani with tender chicken pieces, basmati rice...</div>
+                                            <div style="font-size: 1.2rem; font-weight: 600; color: #22c55e; margin-bottom: 12px;">₹299</div>
+                                            <div style="display: flex; gap: 8px;">
+                                                <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem;">✏️ Edit</button>
+                                                <label style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: #334155; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+                                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
+                                                    <span>Available</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Menu Item Card 2 -->
+                                <div class="card">
+                                    <div style="display: flex; gap: 16px;">
+                                        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #22c55e, #86efac); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🍛</div>
+                                        <div style="flex: 1;">
+                                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                                <div class="veg-icon"></div>
+                                                <div style="font-weight: 600; font-size: 1.1rem;">Veg Biryani</div>
+                                            </div>
+                                            <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px; line-height: 1.4;">Fragrant basmati rice with mixed vegetables and aromatic spices...</div>
+                                            <div style="font-size: 1.2rem; font-weight: 600; color: #22c55e; margin-bottom: 12px;">₹249</div>
+                                            <div style="display: flex; gap: 8px;">
+                                                <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem;">✏️ Edit</button>
+                                                <label style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: #334155; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+                                                    <input type="checkbox" checked style="width: 16px; height: 16px;">
+                                                    <span>Available</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Menu Item Card 3 -->
+                                <div class="card" style="opacity: 0.6;">
+                                    <div style="display: flex; gap: 16px;">
+                                        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #ef4444, #f87171); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🍖</div>
+                                        <div style="flex: 1;">
+                                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                                <div class="nonveg-icon"></div>
+                                                <div style="font-weight: 600; font-size: 1.1rem;">Mutton Biryani</div>
+                                                <div class="badge badge-danger" style="font-size: 0.7rem;">SOLD OUT</div>
+                                            </div>
+                                            <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 8px; line-height: 1.4;">Premium mutton pieces slow-cooked with aromatic spices...</div>
+                                            <div style="font-size: 1.2rem; font-weight: 600; color: #22c55e; margin-bottom: 12px;">₹399</div>
+                                            <div style="display: flex; gap: 8px;">
+                                                <button class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem;">✏️ Edit</button>
+                                                <label style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: #334155; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
+                                                    <input type="checkbox" style="width: 16px; height: 16px;">
+                                                    <span>Available</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DELIVERY PARTNER APP -->
+        <section id="delivery" class="section">
+            <h2 class="section-title">Delivery Partner App Mockups</h2>
+            
+            <!-- 10. Go Online Screen -->
+            <div class="mockup-container">
+                <div class="mockup-label">Delivery Partner App — Home Screen — localhost:3002/</div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="topbar">
+                            <div class="logo" style="font-size: 1.2rem;">🍕 FoodFlow Delivery</div>
+                            <div style="width: 40px; height: 40px; background: #334155; border-radius: 50%; display: flex; align-items: center; justify-content: center;">👤</div>
+                        </div>
+                        
+                        <div style="padding: 40px 24px; text-align: center;">
+                            <!-- Toggle Switch -->
+                            <div style="margin: 60px 0;">
+                                <div style="font-size: 1.5rem; margin-bottom: 20px; color: #94a3b8;">Go Online to Start</div>
+                                <div style="width: 200px; height: 200px; margin: 0 auto; background: linear-gradient(135deg, #1e293b, #334155); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 8px solid #334155; position: relative;">
+                                    <div style="font-size: 4rem;">📴</div>
+                                </div>
+                                <button class="btn btn-primary" style="margin-top: 40px; padding: 16px 60px; font-size: 1.2rem; border-radius: 50px;">
+                                    Go Online
+                                </button>
+                            </div>
+                            
+                            <!-- Today's Stats -->
+                            <div class="card">
+                                <h3 style="margin-bottom: 20px; color: #94a3b8;">Today's Stats</h3>
+                                <div class="grid grid-3" style="gap: 16px; text-align: center;">
+                                    <div>
+                                        <div style="font-size: 2rem; font-weight: 600; color: #e23744;">0</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem;">Deliveries</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 2rem; font-weight: 600; color: #22c55e;">₹0</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem;">Earnings</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 2rem; font-weight: 600;">0h</div>
+                                        <div style="color: #94a3b8; font-size: 0.85rem;">Online Time</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p style="color: #64748b; font-size: 0.9rem; margin-top: 30px;">
+                                You're offline. Go online to start receiving order assignments.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Incoming Assignment -->
+            <div class="mockup-container">
+                <div class="mockup-label">Delivery Partner App — Order Assignment Popup — localhost:3002/</div>
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen" style="padding: 30px 20px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);">
+                        <div style="background: #1e293b; border-radius: 20px; padding: 24px; border: 2px solid #e23744; box-shadow: 0 20px 60px rgba(226, 55, 68, 0.4);">
+                            <div style="text-align: center; margin-bottom: 24px;">
+                                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #e23744, #f87171); border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🚚</div>
+                                <div style="font-size: 1.8rem; font-weight: 600; margin-bottom: 8px;">New Delivery!</div>
+                                <div style="color: #94a3b8;">Order available in your area</div>
+                            </div>
+                            
+                            <div class="card">
+                                <div style="margin-bottom: 16px;">
+                                    <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 4px;">Pick up from</div>
+                                    <div style="font-weight: 600; font-size: 1.1rem;">🍛 Biryani House</div>
+                                    <div style="color: #22c55e; font-size: 0.9rem;">2.3 km from you</div>
+                                </div>
+                                <div style="border-top: 1px dashed #334155; padding-top: 16px; margin-bottom: 16px;">
+                                    <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 4px;">Deliver to</div>
+                                    <div style="font-weight: 600;">📍 Koregaon Park Area</div>
+                                    <div style="color: #f59e0b; font-size: 0.9rem;">4.1 km delivery</div>
+                                </div>
+                                <div style="border-top: 1px dashed #334155; padding-top: 16px;">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <div style="color: #94a3b8;">Estimated Earnings</div>
+                                        <div style="font-size: 1.3rem; font-weight: 600; color: #22c55e;">₹70</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Mini Map Placeholder -->
+                            <div style="height: 120px; background: linear-gradient(135deg, #334155, #475569); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #64748b; margin: 16px 0; font-size: 0.9rem;">
+                                🗺️ Route Preview
+                            </div>
+                            
+                            <!-- Timer -->
+                            <div style="text-align: center; margin: 20px 0;">
+                                <div style="font-size: 3rem; font-weight: 600; color: #e23744;">25</div>
+                                <div style="color: #94a3b8;">seconds to accept</div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div style="display: flex; gap: 12px;">
+                                <button class="btn btn-secondary" style="flex: 1; padding: 16px; font-size: 1.1rem;">
+                                    ✕ Decline
+                                </button>
+                                <button class="btn btn-primary" style="flex: 1; padding: 16px; font-size: 1.1rem;">
+                                    ✓ Accept
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN CONSOLE -->
+        <section id="admin" class="section">
+            <h2 class="section-title">Admin Console Mockups</h2>
+            
+            <!-- 12. Platform Overview -->
+            <div class="mockup-container">
+                <div class="mockup-label">Admin Console — Platform Overview — localhost:3003/</div>
+                <div class="desktop-mockup">
+                    <div class="topbar">
+                        <div class="logo">🍕 FoodFlow Admin</div>
+                        <div style="display: flex; gap: 16px; align-items: center;">
+                            <div style="padding: 8px 16px; background: #334155; border-radius: 8px;">
+                                <span style="color: #94a3b8;">Admin:</span> <span style="font-weight: 600;">Gourav Mishra</span>
+                            </div>
+                            <div style="width: 40px; height: 40px; background: #e23744; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">GM</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex;">
+                        <!-- Sidebar -->
+                        <div style="width: 240px; background: #1e293b; padding: 20px; border-right: 1px solid #334155; min-height: 600px;">
+                            <div style="padding: 12px; background: #334155; border-radius: 8px; margin-bottom: 8px; font-weight: 600;">📊 Dashboard</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">🏪 Restaurants</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📦 Orders</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">👥 Users</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">🚚 Partners</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">🎟️ Coupons</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px;">📈 Analytics</div>
+                        </div>
+                        
+                        <!-- Main Content -->
+                        <div style="flex: 1; padding: 24px;">
+                            <h2 style="font-size: 1.8rem; margin-bottom: 24px;">Platform Overview</h2>
+                            
+                            <!-- Key Stats -->
+                            <div class="grid grid-4" style="margin-bottom: 30px;">
+                                <div class="stat-card">
+                                    <div class="stat-value">12,450</div>
+                                    <div class="stat-label">Active Users</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">347</div>
+                                    <div class="stat-label">Active Restaurants</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">1,230</div>
+                                    <div class="stat-label">Delivery Partners</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">4,567</div>
+                                    <div class="stat-label">Orders Today</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Revenue Chart -->
+                            <div class="card" style="margin-bottom: 24px;">
+                                <h3 style="margin-bottom: 20px;">GMV Trend (Last 7 Days)</h3>
+                                <div class="bar-chart">
+                                    <div class="bar" style="height: 60%;">
+                                        <div class="bar-label">Mon</div>
+                                    </div>
+                                    <div class="bar" style="height: 75%;">
+                                        <div class="bar-label">Tue</div>
+                                    </div>
+                                    <div class="bar" style="height: 85%;">
+                                        <div class="bar-label">Wed</div>
+                                    </div>
+                                    <div class="bar" style="height: 70%;">
+                                        <div class="bar-label">Thu</div>
+                                    </div>
+                                    <div class="bar" style="height: 95%;">
+                                        <div class="bar-label">Fri</div>
+                                    </div>
+                                    <div class="bar" style="height: 100%;">
+                                        <div class="bar-label">Sat</div>
+                                    </div>
+                                    <div class="bar" style="height: 90%;">
+                                        <div class="bar-label">Sun</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Actions -->
+                            <div class="grid grid-2" style="gap: 20px;">
+                                <div class="card" style="border: 1px solid #e23744;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                        <h3>Pending Approvals</h3>
+                                        <div class="badge badge-danger">3</div>
+                                    </div>
+                                    <div style="color: #94a3b8; margin-bottom: 16px;">3 restaurants awaiting approval</div>
+                                    <button class="btn btn-primary" style="width: 100%;">Review Now</button>
+                                </div>
+                                
+                                <div class="card">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                        <h3>System Health</h3>
+                                        <div class="badge badge-success">ALL UP</div>
+                                    </div>
+                                    <div style="color: #94a3b8; margin-bottom: 16px;">All microservices operational</div>
+                                    <button class="btn btn-secondary" style="width: 100%;">View Metrics</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 13. Analytics Dashboard -->
+            <div class="mockup-container">
+                <div class="mockup-label">Admin Console — Analytics Dashboard — localhost:3003/analytics</div>
+                <div class="desktop-mockup">
+                    <div class="topbar">
+                        <div class="logo">🍕 FoodFlow Admin</div>
+                        <button class="btn btn-primary">📊 Export Report</button>
+                    </div>
+                    
+                    <div style="display: flex;">
+                        <!-- Sidebar -->
+                        <div style="width: 240px; background: #1e293b; padding: 20px; border-right: 1px solid #334155; min-height: 600px;">
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📊 Dashboard</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">🏪 Restaurants</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">📦 Orders</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">👥 Users</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">🚚 Partners</div>
+                            <div style="padding: 12px; color: #94a3b8; border-radius: 8px; margin-bottom: 8px;">🎟️ Coupons</div>
+                            <div style="padding: 12px; background: #334155; border-radius: 8px; font-weight: 600;">📈 Analytics</div>
+                        </div>
+                        
+                        <!-- Main Content -->
+                        <div style="flex: 1; padding: 24px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <h2 style="font-size: 1.8rem;">Platform Analytics</h2>
+                                <select class="input" style="width: 200px; padding: 10px;">
+                                    <option>Last 7 Days</option>
+                                    <option>Last 30 Days</option>
+                                    <option selected>Last 90 Days</option>
+                                    <option>All Time</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Key Metrics -->
+                            <div class="grid grid-4" style="margin-bottom: 30px;">
+                                <div class="stat-card">
+                                    <div class="stat-value">₹5.6L</div>
+                                    <div class="stat-label">GMV Today</div>
+                                    <div style="color: #22c55e; font-size: 0.8rem; margin-top: 4px;">↑ 12% vs yesterday</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">4,567</div>
+                                    <div class="stat-label">Orders Today</div>
+                                    <div style="color: #22c55e; font-size: 0.8rem; margin-top: 4px;">↑ 8% vs yesterday</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">₹392</div>
+                                    <div class="stat-label">Avg Order Value</div>
+                                    <div style="color: #ef4444; font-size: 0.8rem; margin-top: 4px;">↓ 3% vs yesterday</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">94.2%</div>
+                                    <div class="stat-label">Success Rate</div>
+                                    <div style="color: #22c55e; font-size: 0.8rem; margin-top: 4px;">↑ 1.2% vs yesterday</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Charts Grid -->
+                            <div class="grid grid-2" style="gap: 20px;">
+                                <div class="card">
+                                    <h3 style="margin-bottom: 20px;">Orders by Day</h3>
+                                    <div class="bar-chart" style="height: 150px;">
+                                        <div class="bar" style="height: 50%;">
+                                            <div class="bar-label">Mon</div>
+                                        </div>
+                                        <div class="bar" style="height: 65%;">
+                                            <div class="bar-label">Tue</div>
+                                        </div>
+                                        <div class="bar" style="height: 80%;">
+                                            <div class="bar-label">Wed</div>
+                                        </div>
+                                        <div class="bar" style="height: 70%;">
+                                            <div class="bar-label">Thu</div>
+                                        </div>
+                                        <div class="bar" style="height: 95%;">
+                                            <div class="bar-label">Fri</div>
+                                        </div>
+                                        <div class="bar" style="height: 100%;">
+                                            <div class="bar-label">Sat</div>
+                                        </div>
+                                        <div class="bar" style="height: 85%;">
+                                            <div class="bar-label">Sun</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <h3 style="margin-bottom: 20px;">Top Performing Cities</h3>
+                                    <div style="padding: 16px 0;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                            <div>
+                                                <div style="font-weight: 600;">Pune</div>
+                                                <div style="color: #94a3b8; font-size: 0.85rem;">3,245 orders</div>
+                                            </div>
+                                            <div style="font-weight: 600; color: #22c55e;">₹12.4L</div>
+                                        </div>
+                                        <div style="width: 100%; height: 8px; background: #0f172a; border-radius: 4px; margin-bottom: 16px;">
+                                            <div style="width: 100%; height: 100%; background: linear-gradient(to right, #e23744, #f87171); border-radius: 4px;"></div>
+                                        </div>
+                                        
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                            <div>
+                                                <div style="font-weight: 600;">Mumbai</div>
+                                                <div style="color: #94a3b8; font-size: 0.85rem;">2,187 orders</div>
+                                            </div>
+                                            <div style="font-weight: 600; color: #22c55e;">₹8.6L</div>
+                                        </div>
+                                        <div style="width: 100%; height: 8px; background: #0f172a; border-radius: 4px; margin-bottom: 16px;">
+                                            <div style="width: 67%; height: 100%; background: linear-gradient(to right, #e23744, #f87171); border-radius: 4px;"></div>
+                                        </div>
+                                        
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                            <div>
+                                                <div style="font-weight: 600;">Bangalore</div>
+                                                <div style="color: #94a3b8; font-size: 0.85rem;">1,956 orders</div>
+                                            </div>
+                                            <div style="font-weight: 600; color: #22c55e;">₹7.8L</div>
+                                        </div>
+                                        <div style="width: 100%; height: 8px; background: #0f172a; border-radius: 4px;">
+                                            <div style="width: 60%; height: 100%; background: linear-gradient(to right, #e23744, #f87171); border-radius: 4px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding: 40px 20px; border-top: 1px solid #334155; margin-top: 60px;">
+            <div class="logo" style="font-size: 2rem; margin-bottom: 10px;">🍕 FoodFlow</div>
+            <p style="color: #94a3b8; margin-bottom: 20px;">
+                Visual Mockups for Complete Food Delivery Platform<br>
+                Realistic Dark Theme • Production-Grade Design
+            </p>
+            <p style="color: #64748b; font-size: 0.9rem;">
+                Built by <strong style="color: #e23744;">Gourav Mishra</strong> • Senior Full Stack Developer @ Emerson, Pune<br>
+                <a href="mailto:gauravmishra19995@gmail.com" style="color: #e23744; text-decoration: none;">gauravmishra19995@gmail.com</a> • 
+                <a href="https://github.com/gouravm19" style="color: #e23744; text-decoration: none;">GitHub</a> • 
+                <a href="https://linkedin.com/in/gourav-mishra-dev" style="color: #e23744; text-decoration: none;">LinkedIn</a>
+            </p>
+        </div>
+    </div>
+
+    <a href="#customer" class="floating-btn" title="Back to Top">↑</a>
+
+    <style>
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(226, 55, 68, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(226, 55, 68, 0);
+            }
+        }
+    </style>
+</body>
+</html>
