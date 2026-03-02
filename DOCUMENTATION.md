@@ -1893,6 +1893,824 @@ Result: Partner A gets assignment, Partner B sees "Order already assigned"
 
 | Technology | Version | Purpose | Justification | Alternatives Considered |
 |------------|---------|---------|---------------|------------------------|
+
+
+#### Table: `order_status_history`
+
+**Purpose**: Audit trail of all status changes
+
+```sql
+CREATE TABLE order_status_history (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+    status VARCHAR(30) NOT NULL,
+    changed_by VARCHAR(10) NOT NULL 
+        CHECK (changed_by IN ('USER', 'RESTAURANT', 'DELIVERY', 'SYSTEM')),
+    changed_by_id UUID,
+    notes VARCHAR(255),
+    location_lat DECIMAL(10,8),
+    location_lng DECIMAL(11,8),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_status_history_order ON order_status_history(order_id, created_at);
+```
+
+**Usage Example:**
+```java
+// When delivery partner marks "Picked Up"
+OrderStatusHistory history = OrderStatusHistory.builder()
+    .orderId(orderId)
+    .status("PICKED_UP")
+    .changedBy("DELIVERY")
+    .changedById(partnerId)
+    .notes("Food collected from restaurant")
+    .locationLat(18.5204)
+    .locationLng(73.8567)
+    .build();
+```
+
+#### Table: `payments`
+
+**Purpose**: Payment gateway transactions
+
+```sql
+CREATE TABLE payments (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    order_id UUID NOT NULL REFERENCES orders(id),
+    razorpay_order_id VARCHAR(100) UNIQUE,
+    razorpay_payment_id VARCHAR(100) UNIQUE,
+    razorpay_signature VARCHAR(500),
+    amount DECIMAL(10,2) NOT NULL CHECK (amount >= 0),
+    currency VARCHAR(3) DEFAULT 'INR',
+    status VARCHAR(20) NOT NULL DEFAULT 'CREATED'
+        CHECK (status IN ('CREATED', 'AUTHORIZED', 'CAPTURED', 'FAILED', 'REFUNDED')),
+    payment_method VARCHAR(20),
+    gateway_response JSONB,
+    refund_id VARCHAR(100),
+    refund_amount DECIMAL(10,2) CHECK (refund_amount >= 0),
+    refund_status VARCHAR(20) CHECK (refund_status IN ('INITIATED', 'PROCESSED', 'FAILED')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_payments_order ON payments(order_id);
+CREATE INDEX idx_payments_razorpay_order ON payments(razorpay_order_id);
+CREATE INDEX idx_payments_razorpay_payment ON payments(razorpay_payment_id);
+CREATE INDEX idx_payments_status ON payments(status);
+```
+
+**Payment Lifecycle:**
+1. `CREATED` — Razorpay order created, awaiting payment
+2. `AUTHORIZED` — Payment initiated (OTP entered, pending capture)
+3. `CAPTURED` — Payment successful
+4. `FAILED` — Payment declined
+5. `REFUNDED` — Money returned to customer
+
+#### Table: `delivery_partners`
+
+**Purpose**: Delivery partner profiles and status
+
+```sql
+CREATE TABLE delivery_partners (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+    vehicle_type VARCHAR(20) NOT NULL CHECK (vehicle_type IN ('BICYCLE', 'MOTORBIKE', 'CAR')),
+    vehicle_number VARCHAR(20) NOT NULL,
+    license_number VARCHAR(50) NOT NULL,
+    
+    -- Availability status
+    is_available BOOLEAN DEFAULT false,
+    is_online BOOLEAN DEFAULT false,
+    current_lat DECIMAL(10,8),
+    current_lng DECIMAL(11,8),
+    last_location_update TIMESTAMP WITH TIME ZONE,
+    
+    -- Performance metrics
+    total_deliveries INTEGER DEFAULT 0,
+    total_earnings DECIMAL(12,2) DEFAULT 0,
+    average_rating DECIMAL(3,2) DEFAULT 0 CHECK (average_rating >= 0 AND average_rating <= 5),
+    
+    -- Onboarding
+    kyc_status VARCHAR(20) DEFAULT 'PENDING' 
+        CHECK (kyc_status IN ('PENDING', 'VERIFIED', 'REJECTED')),
+    bank_account JSONB,
+    
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_dp_user ON delivery_partners(user_id);
+CREATE INDEX idx_dp_available ON delivery_partners(is_available, is_online) WHERE is_available = true AND is_online = true;
+CREATE INDEX idx_dp_location ON delivery_partners(current_lat, current_lng) WHERE is_online = true;
+```
+
+**Bank Account JSON:**
+```json
+{
+  "accountNumber": "123456789012",
+  "ifscCode": "HDFC0001234",
+  "accountHolderName": "Vijay Singh",
+  "bankName": "HDFC Bank"
+}
+```
+
+#### Table: `coupons`
+
+**Purpose**: Discount coupons and promotions
+
+```sql
+CREATE TABLE coupons (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code VARCHAR(30) UNIQUE NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    discount_type VARCHAR(20) NOT NULL 
+        CHECK (discount_type IN ('PERCENTAGE', 'FLAT', 'FREE_DELIVERY')),
+    discount_value DECIMAL(10,2) NOT NULL CHECK (discount_value > 0),
+    max_discount DECIMAL(10,2),
+    min_order_amount DECIMAL(10,2) DEFAULT 0,
+    applicable_to VARCHAR(20) DEFAULT 'ALL' 
+        CHECK (applicable_to IN ('ALL', 'NEW_USERS', 'SPECIFIC_RESTAURANT')),
+    restaurant_id UUID,
+    valid_from TIMESTAMP WITH TIME ZONE NOT NULL,
+    valid_until TIMESTAMP WITH TIME ZONE NOT NULL,
+    max_uses INTEGER,
+    max_uses_per_user INTEGER DEFAULT 1,
+    used_count INTEGER DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    
+    CONSTRAINT check_dates CHECK (valid_until > valid_from),
+    CONSTRAINT check_restaurant CHECK (
+        (applicable_to != 'SPECIFIC_RESTAURANT') OR 
+        (applicable_to = 'SPECIFIC_RESTAURANT' AND restaurant_id IS NOT NULL)
+    )
+);
+
+CREATE INDEX idx_coupons_code ON coupons(code);
+CREATE INDEX idx_coupons_active ON coupons(is_active) WHERE is_active = true;
+CREATE INDEX idx_coupons_validity ON coupons(valid_from, valid_until);
+```
+
+**Example Coupons:**
+```sql
+-- 50% off up to ₹100 for new users
+INSERT INTO coupons (code, title, discount_type, discount_value, max_discount, min_order_amount, applicable_to, valid_from, valid_until) 
+VALUES ('WELCOME50', 'Welcome Offer', 'PERCENTAGE', 50, 100, 199, 'NEW_USERS', NOW(), NOW() + INTERVAL '30 days');
+
+-- Flat ₹50 off on orders above ₹299
+INSERT INTO coupons (code, title, discount_type, discount_value, min_order_amount, valid_from, valid_until) 
+VALUES ('SAVE50', 'Flat ₹50 Off', 'FLAT', 50, 299, 'ALL', NOW(), NOW() + INTERVAL '7 days');
+
+-- Free delivery
+INSERT INTO coupons (code, title, discount_type, discount_value, min_order_amount, valid_from, valid_until) 
+VALUES ('FREEDEL', 'Free Delivery', 'FREE_DELIVERY', 0, 0, 'ALL', NOW(), NOW() + INTERVAL '14 days');
+```
+
+#### Table: `coupon_usages`
+
+**Purpose**: Track who used which coupons
+
+```sql
+CREATE TABLE coupon_usages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    coupon_id UUID NOT NULL REFERENCES coupons(id),
+    user_id UUID NOT NULL REFERENCES users(id),
+    order_id UUID NOT NULL REFERENCES orders(id),
+    discount_applied DECIMAL(10,2) NOT NULL,
+    used_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    
+    UNIQUE(coupon_id, user_id, order_id)
+);
+
+CREATE INDEX idx_coupon_usage_coupon ON coupon_usages(coupon_id);
+CREATE INDEX idx_coupon_usage_user ON coupon_usages(user_id);
+```
+
+#### Table: `refresh_tokens`
+
+**Purpose**: Store hashed refresh tokens for JWT rotation
+
+```sql
+CREATE TABLE refresh_tokens (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash VARCHAR(255) UNIQUE NOT NULL,
+    device_info VARCHAR(255),
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    is_revoked BOOLEAN DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_refresh_tokens_user ON refresh_tokens(user_id);
+CREATE INDEX idx_refresh_tokens_hash ON refresh_tokens(token_hash) WHERE is_revoked = false;
+CREATE INDEX idx_refresh_tokens_expiry ON refresh_tokens(expires_at) WHERE is_revoked = false;
+```
+
+**Cleanup Job** (runs daily):
+```sql
+DELETE FROM refresh_tokens WHERE expires_at < NOW() - INTERVAL '7 days';
+```
+
+#### Table: `otp_logs`
+
+**Purpose**: Track OTP generation and attempts
+
+```sql
+CREATE TABLE otp_logs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    phone_number VARCHAR(15) NOT NULL,
+    otp_hash VARCHAR(255) NOT NULL,
+    purpose VARCHAR(30) NOT NULL CHECK (purpose IN ('LOGIN', 'REGISTER', 'ORDER_CANCEL')),
+    attempts INTEGER DEFAULT 0,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    verified_at TIMESTAMP WITH TIME ZONE,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_otp_phone ON otp_logs(phone_number, expires_at);
+CREATE INDEX idx_otp_purpose ON otp_logs(purpose);
+```
+
+**Rate Limiting Logic:**
+```sql
+-- Check if user exceeded OTP limit (3 per hour)
+SELECT COUNT(*) FROM otp_logs
+WHERE phone_number = '+91-9876543210'
+  AND created_at > NOW() - INTERVAL '1 hour';
+```
+
+### 5.2 MongoDB Collections
+
+**Connection Configuration:**
+```yaml
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/fooddelivery
+      auto-index-creation: true
+```
+
+#### Collection: `restaurants`
+
+**Purpose**: Restaurant master data with menu
+
+```javascript
+{
+  "_id": ObjectId("..."),
+  "restaurantId": "550e8400-e29b-41d4-a716-446655440000",  // UUID for PostgreSQL reference
+  "name": "Biryani House",
+  "slug": "biryani-house-koregaon-park",
+  "description": "Authentic Hyderabadi Biryani & Mughlai Cuisine",
+  "cuisines": ["North Indian", "Mughlai", "Biryani"],
+  "categories": ["Biryani", "Starters", "Breads"],
+  "logoUrl": "https://foodflow-images.s3.amazonaws.com/restaurants/biryani-house/logo.jpg",
+  "coverImageUrl": "https://foodflow-images.s3.amazonaws.com/restaurants/biryani-house/cover.jpg",
+  "gallery": [
+    "https://foodflow-images.s3.amazonaws.com/restaurants/biryani-house/interior-1.jpg",
+    "https://foodflow-images.s3.amazonaws.com/restaurants/biryani-house/dish-1.jpg"
+  ],
+  "address": {
+    "line1": "123, MG Road",
+    "landmark": "Near KFC",
+    "city": "Pune",
+    "state": "Maharashtra",
+    "pincode": "411001",
+    "location": {
+      "type": "Point",
+      "coordinates": [73.8567, 18.5204]  // [longitude, latitude]
+    }
+  },
+  "contact": {
+    "phone": "+91-9876543210",
+    "email": "contact@biryan ihouse.com",
+    "website": "https://biryanihouse.com"
+  },
+  "owner": {
+    "userId": "owner-uuid-here",
+    "name": "Amit Kumar"
+  },
+  "operatingHours": {
+    "monday": {"open": "11:00", "close": "23:00", "isClosed": false},
+    "tuesday": {"open": "11:00", "close": "23:00", "isClosed": false},
+    "wednesday": {"open": "11:00", "close": "23:00", "isClosed": false},
+    "thursday": {"open": "11:00", "close": "23:00", "isClosed": false},
+    "friday": {"open": "11:00", "close": "23:30", "isClosed": false},
+    "saturday": {"open": "11:00", "close": "23:30", "isClosed": false},
+    "sunday": {"open": "11:00", "close": "23:00", "isClosed": false}
+  },
+  "isCurrentlyOpen": true,
+  "status": "ACTIVE",  // PENDING_APPROVAL | ACTIVE | SUSPENDED | CLOSED
+  "rating": 4.3,
+  "totalRatings": 1247,
+  "deliveryInfo": {
+    "minOrderAmount": 199,
+    "deliveryFee": 30,
+    "avgDeliveryTime": 35,
+    "deliveryRadius": 5
+  },
+  "features": {
+    "isPureVeg": false,
+    "hasTableBooking": false,
+    "hasOutdoorSeating": true,
+    "offersFreeDelivery": false,
+    "isNewlyOpened": false,
+    "isPromoted": true
+  },
+  "paymentMethods": ["CARD", "UPI", "NETBANKING", "WALLET", "COD"],
+  "tags": ["Trending", "Top Rated"],
+  "createdAt": ISODate("2024-01-01T10:00:00Z"),
+  "updatedAt": ISODate("2024-01-15T14:30:00Z")
+}
+```
+
+**Indexes:**
+```javascript
+db.restaurants.createIndex({"address.location": "2dsphere"});  // Geospatial queries
+db.restaurants.createIndex({name: "text", cuisines: "text", categories: "text"});  // Full-text search
+db.restaurants.createIndex({slug: 1}, {unique: true});
+db.restaurants.createIndex({status: 1, isCurrentlyOpen: 1});
+db.restaurants.createIndex({rating: -1});
+```
+
+**Geospatial Query Example:**
+```javascript
+db.restaurants.find({
+  "address.location": {
+    $near: {
+      $geometry: {
+        type: "Point",
+        coordinates: [73.8567, 18.5204]
+      },
+      $maxDistance: 5000  // 5km
+    }
+  },
+  status: "ACTIVE",
+  isCurrentlyOpen: true
+});
+```
+
+#### Collection: `menu_categories`
+
+**Purpose**: Grouping menu items (Starters, Main Course, etc.)
+
+```javascript
+{
+  "_id": ObjectId("..."),
+  "restaurantId": "550e8400-e29b-41d4-a716-446655440000",
+  "name": "Biryani",
+  "description": "Aromatic rice dishes cooked with spices and meat/vegetables",
+  "imageUrl": "https://foodflow-images.s3.amazonaws.com/categories/biryani.jpg",
+  "sortOrder": 1,
+  "isActive": true,
+  "availableFrom": "00:00",
+  "availableUntil": "23:59",
+  "createdAt": ISODate("2024-01-01T10:00:00Z")
+}
+```
+
+**Indexes:**
+```javascript
+db.menu_categories.createIndex({restaurantId: 1, sortOrder: 1});
+db.menu_categories.createIndex({restaurantId: 1, isActive: 1});
+```
+
+#### Collection: `menu_items`
+
+**Purpose**: Individual food items with prices and customizations
+
+```javascript
+{
+  "_id": ObjectId("..."),
+  "menuItemId": "item-uuid-here",
+  "restaurantId": "550e8400-e29b-41d4-a716-446655440000",
+  "categoryId": ObjectId("category-id-here"),
+  "name": "Chicken Biryani",
+  "description": "Hyderabadi-style biryani with tender chicken pieces, basmati rice, and aromatic spices",
+  "imageUrl": "https://foodflow-images.s3.amazonaws.com/items/chicken-biryani.jpg",
+  "type": "NON_VEG",  // VEG | NON_VEG | EGG
+  "price": 299,
+  "discountedPrice": null,
+  "isAvailable": true,
+  "isBestSeller": true,
+  "isSpicy": true,
+  "customizations": [
+    {
+      "groupName": "Choose Size",
+      "isRequired": true,
+      "minSelect": 1,
+      "maxSelect": 1,
+      "options": [
+        {"name": "Regular", "extraPrice": 0, "isDefault": true},
+        {"name": "Large", "extraPrice": 100, "isDefault": false},
+        {"name": "Family Pack", "extraPrice": 250, "isDefault": false}
+      ]
+    },
+    {
+      "groupName": "Add Extras",
+      "isRequired": false,
+      "minSelect": 0,
+      "maxSelect": 3,
+      "options": [
+        {"name": "Extra Raita", "extraPrice": 30, "isDefault": false},
+        {"name": "Extra Gravy", "extraPrice": 40, "isDefault": false},
+        {"name": "Boiled Egg", "extraPrice": 20, "isDefault": false}
+      ]
+    },
+    {
+      "groupName": "Spice Level",
+      "isRequired": true,
+      "minSelect": 1,
+      "maxSelect": 1,
+      "options": [
+        {"name": "Mild", "extraPrice": 0, "isDefault": false},
+        {"name": "Medium", "extraPrice": 0, "isDefault": true},
+        {"name": "Extra Spicy", "extraPrice": 0, "isDefault": false}
+      ]
+    }
+  ],
+  "nutritionInfo": {
+    "calories": 650,
+    "protein": 30,
+    "carbs": 85,
+    "fat": 20
+  },
+  "allergens": ["Dairy", "Gluten"],
+  "preparationTime": 25,
+  "tags": ["Must Try", "Chef's Special"],
+  "totalOrders": 3542,
+  "rating": 4.6,
+  "createdAt": ISODate("2024-01-01T10:00:00Z"),
+  "updatedAt": ISODate("2024-01-15T14:30:00Z")
+}
+```
+
+**Indexes:**
+```javascript
+db.menu_items.createIndex({restaurantId: 1, categoryId: 1, isAvailable: 1});
+db.menu_items.createIndex({menuItemId: 1}, {unique: true});
+db.menu_items.createIndex({name: "text", description: "text", tags: "text"});
+db.menu_items.createIndex({type: 1});
+db.menu_items.createIndex({isBestSeller: 1, rating: -1});
+```
+
+#### Collection: `reviews`
+
+**Purpose**: Customer reviews for restaurants and deliveries
+
+```javascript
+{
+  "_id": ObjectId("..."),
+  "orderId": "order-uuid-here",
+  "userId": "user-uuid-here",
+  "restaurantId": "restaurant-uuid-here",
+  "deliveryPartnerId": "partner-uuid-here",
+  
+  "restaurantRating": 5,
+  "restaurantReview": "Absolutely delicious! Best biryani in Pune. The chicken was tender and perfectly cooked.",
+  
+  "deliveryRating": 4,
+  "deliveryReview": "Food arrived on time but packaging could be better.",
+  
+  "itemRatings": [
+    {
+      "menuItemId": "item-uuid-1",
+      "rating": 5,
+      "review": "Perfect spice level, generous portions"
+    },
+    {
+      "menuItemId": "item-uuid-2",
+      "rating": 4,
+      "review": "Good taste but could be hotter"
+    }
+  ],
+  
+  "images": [
+    "https://foodflow-images.s3.amazonaws.com/reviews/user123/img1.jpg",
+    "https://foodflow-images.s3.amazonaws.com/reviews/user123/img2.jpg"
+  ],
+  
+  "isVerified": true,
+  "helpfulCount": 23,
+  "restaurantResponse": "Thank you for your feedback! We're glad you enjoyed your meal. 🙏",
+  
+  "createdAt": ISODate("2024-01-15T20:30:00Z"),
+  "updatedAt": ISODate("2024-01-15T21:00:00Z")
+}
+```
+
+**Indexes:**
+```javascript
+db.reviews.createIndex({restaurantId: 1, createdAt: -1});
+db.reviews.createIndex({userId: 1});
+db.reviews.createIndex({orderId: 1}, {unique: true});
+db.reviews.createIndex({deliveryPartnerId: 1});
+db.reviews.createIndex({isVerified: 1, helpfulCount: -1});
+```
+
+### 5.3 Redis Key Patterns Reference
+
+| Key Pattern | Type | Purpose | TTL | Example |
+|-------------|------|---------|-----|---------|
+| `cart:{userId}` | Hash | User's cart items | 24h | `cart:user-123` |
+| `otp:{phoneNumber}` | String | OTP hash | 10min | `otp:+919876543210` |
+| `rate_limit:otp:{phoneNumber}` | String | OTP request counter | 1h | `rate_limit:otp:+919876543210` |
+| `rate_limit:api:{userId}:{endpoint}` | String | API rate limit counter | 1min | `rate_limit:api:user-123:/orders` |
+| `session:{userId}` | Hash | User session data | 15min | `session:user-123` |
+| `menu:{restaurantId}` | String (JSON) | Cached menu | 5min | `menu:restaurant-456` |
+| `order:track:{orderId}` | Hash | Real-time order status | 1h | `order:track:order-789` |
+| `partner:location:{partnerId}` | Hash | Partner GPS location | 5min | `partner:location:partner-111` |
+| `idempotency:{key}` | String | Prevent duplicate processing | 24h | `idempotency:order:xyz123` |
+| `processed:{topic}:{messageId}` | String | Kafka message dedup | 24h | `processed:order.created:msg-999` |
+
+**Cart Structure (Hash):**
+```redis
+HSET cart:user-123 "item-456:customizations-hash" '{"menuItemId":"item-456","qty":2,"price":299,"customizations":{"Size":"Large"}}'
+HSET cart:user-123 "item-789:no-custom" '{"menuItemId":"item-789","qty":1,"price":150,"customizations":{}}'
+EXPIRE cart:user-123 86400
+```
+
+**OTP Storage:**
+```redis
+SET otp:+919876543210 "$2a$12$hashed_otp_here" EX 600
+INCR rate_limit:otp:+919876543210
+EXPIRE rate_limit:otp:+919876543210 3600
+```
+
+**Partner Location (Updated every 15 seconds):**
+```redis
+HMSET partner:location:partner-111 lat 18.5204 lng 73.8567 timestamp 1704067200
+EXPIRE partner:location:partner-111 300
+```
+
+### 5.4 Elasticsearch Index Mappings
+
+**Index: `restaurants`**
+
+```json
+{
+  "mappings": {
+    "properties": {
+      "restaurantId": {"type": "keyword"},
+      "name": {
+        "type": "text",
+        "analyzer": "standard",
+        "fields": {
+          "keyword": {"type": "keyword"},
+          "autocomplete": {
+            "type": "text",
+            "analyzer": "autocomplete",
+            "search_analyzer": "standard"
+          }
+        }
+      },
+      "slug": {"type": "keyword"},
+      "cuisines": {
+        "type": "text",
+        "analyzer": "standard",
+        "fields": {"keyword": {"type": "keyword"}}
+      },
+      "categories": {"type": "keyword"},
+      "rating": {"type": "float"},
+      "totalRatings": {"type": "integer"},
+      "status": {"type": "keyword"},
+      "isCurrentlyOpen": {"type": "boolean"},
+      "isPureVeg": {"type": "boolean"},
+      "deliveryFee": {"type": "float"},
+      "avgDeliveryTime": {"type": "integer"},
+      "location": {"type": "geo_point"},
+      "tags": {"type": "keyword"}
+    }
+  },
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "autocomplete": {
+          "tokenizer": "autocomplete",
+          "filter": ["lowercase"]
+        }
+      },
+      "tokenizer": {
+        "autocomplete": {
+          "type": "edge_ngram",
+          "min_gram": 2,
+          "max_gram": 10,
+          "token_chars": ["letter", "digit"]
+        }
+      }
+    }
+  }
+}
+```
+
+**Index: `menu_items`**
+
+```json
+{
+  "mappings": {
+    "properties": {
+      "menuItemId": {"type": "keyword"},
+      "restaurantId": {"type": "keyword"},
+      "name": {
+        "type": "text",
+        "analyzer": "standard",
+        "fields": {
+          "autocomplete": {
+            "type": "text",
+            "analyzer": "autocomplete",
+            "search_analyzer": "standard"
+          }
+        }
+      },
+      "description": {"type": "text"},
+      "type": {"type": "keyword"},
+      "price": {"type": "float"},
+      "isAvailable": {"type": "boolean"},
+      "isBestSeller": {"type": "boolean"},
+      "rating": {"type": "float"},
+      "tags": {"type": "keyword"},
+      "restaurantName": {"type": "text"}
+    }
+  }
+}
+```
+
+**Search Query Example (Autocomplete):**
+```json
+{
+  "query": {
+    "bool": {
+      "must": {
+        "multi_match": {
+          "query": "piz",
+          "fields": ["name.autocomplete", "restaurantName.autocomplete"],
+          "type": "phrase_prefix"
+        }
+      },
+      "filter": [
+        {"term": {"isAvailable": true}},
+        {"geo_distance": {
+          "distance": "5km",
+          "location": {"lat": 18.5204, "lon": 73.8567}
+        }}
+      ]
+    }
+  }
+}
+```
+
+### 5.5 Database Entity Relationship Diagram
+
+```
+┌─────────────────┐
+│     users       │
+│─────────────────│
+│ PK id (UUID)    │◄──┐
+│    phone        │   │
+│    email        │   │
+│    name         │   │
+│    role         │   │
+└─────────────────┘   │
+         │            │
+         │ 1:N        │
+         ▼            │
+┌──────────────────┐  │
+│ user_addresses   │  │
+│──────────────────│  │
+│ PK id            │  │
+│ FK user_id       │──┘
+│    label         │
+│    latitude      │
+│    longitude     │
+└──────────────────┘
+         │
+         │ (referenced by orders.delivery_address_id)
+         │
+┌─────────────────────┐
+│      orders         │
+│─────────────────────│
+│ PK id               │
+│    order_number     │
+│ FK user_id          │──────┐
+│ FK restaurant_id    │      │ references users
+│ FK delivery_address │──┐   │
+│ FK delivery_partner │  │   │
+│    status           │  │   │
+│    total_amount     │  │   │
+└──────────┬──────────┘  │   │
+           │ 1:N         │   │
+           ▼             │   │
+┌────────────────────┐   │   │
+│   order_items      │   │   │
+│────────────────────│   │   │
+│ PK id              │   │   │
+│ FK order_id        │───┘   │
+│ FK menu_item_id    │       │
+│    quantity        │       │
+│    unit_price      │       │
+└────────────────────┘       │
+                             │
+┌────────────────────┐       │
+│ order_status_hist  │       │
+│────────────────────│       │
+│ PK id              │       │
+│ FK order_id        │───────┘
+│    status          │
+│    changed_by      │
+└────────────────────┘
+
+┌───────────────────┐
+│    payments       │
+│───────────────────│
+│ PK id             │
+│ FK order_id       │───► references orders.id
+│ razorpay_order_id │
+│ status            │
+└───────────────────┘
+
+┌──────────────────────┐
+│  delivery_partners   │
+│──────────────────────│
+│ PK id                │
+│ FK user_id           │───► references users.id
+│    is_available      │
+│    current_lat       │
+│    current_lng       │
+└──────────────────────┘
+         │
+         │ (referenced by orders.delivery_partner_id)
+
+┌──────────────────┐
+│    coupons       │
+│──────────────────│
+│ PK id            │
+│    code          │
+│    discount_type │
+│    discount_value│
+└────────┬─────────┘
+         │ 1:N
+         ▼
+┌──────────────────┐
+│  coupon_usages   │
+│──────────────────│
+│ PK id            │
+│ FK coupon_id     │
+│ FK user_id       │
+│ FK order_id      │
+└──────────────────┘
+
+┌──────────────────┐
+│ refresh_tokens   │
+│──────────────────│
+│ PK id            │
+│ FK user_id       │───► references users.id
+│    token_hash    │
+│    expires_at    │
+└──────────────────┘
+
+MongoDB (Separate database, referenced by UUID):
+┌─────────────────┐
+│  restaurants    │  ◄─── restaurantId matches orders.restaurant_id
+│─────────────────│
+│ restaurantId    │
+│ name, slug      │
+│ location (geo)  │
+└─────────┬───────┘
+          │ 1:N
+          ▼
+┌──────────────────┐
+│ menu_categories  │
+│──────────────────│
+│ restaurantId     │
+│ name, sortOrder  │
+└────────┬─────────┘
+         │ 1:N
+         ▼
+┌─────────────────┐
+│   menu_items    │
+│─────────────────│
+│ menuItemId      │ ◄─── matches order_items.menu_item_id
+│ restaurantId    │
+│ categoryId      │
+│ customizations[]│
+└─────────────────┘
+
+┌─────────────────┐
+│    reviews      │
+│─────────────────│
+│ orderId         │ ◄─── references orders.id
+│ userId          │
+│ restaurantId    │
+│ rating, review  │
+└─────────────────┘
+```
+
+---
+
+
 | **Java** | 17 (LTS) | Primary language | Industry standard for microservices; strong typing; excellent tooling; Emerson uses Java | Kotlin (more concise but less widespread), Go (faster but less libraries) |
 | **Spring Boot** | 3.2.x | Application framework | Complete ecosystem (Data, Security, Cloud); auto-configuration; production-ready | Quarkus (newer, less mature), Micronaut (less community support) |
 | **Spring Cloud** | 2023.0.x | Microservices patterns | Service discovery (Eureka), API Gateway, Config Server | Kubernetes-native (more complex), Consul (less Spring integration) |
