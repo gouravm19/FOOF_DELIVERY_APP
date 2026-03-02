@@ -1,5 +1,39 @@
 # 📸 FoodFlow Visual Documentation & Screenshots
 
+## 🎨 Visual Mockups Available!
+
+**✨ INTERACTIVE MOCKUPS:** Open `docs/VISUAL_MOCKUPS.html` in your browser to see **13 fully-styled visual mockups** of all major pages!
+
+**What's included:**
+- **Customer App** (6 mockups): Login, Home, Restaurant Detail, Cart, Order Tracking, Order History
+- **Restaurant Portal** (3 mockups): Dashboard, Order Management, Menu Management
+- **Delivery Partner App** (2 mockups): Go Online Screen, Order Assignment Popup
+- **Admin Console** (2 mockups): Platform Overview, Analytics Dashboard
+
+**Features:**
+- ✅ Dark theme (#0f172a background, #e23744 primary)
+- ✅ Realistic seed data (Biryani House, Pizza Paradise, Pune addresses)
+- ✅ Production-grade UI design
+- ✅ All inline CSS (single HTML file, 1000+ lines)
+- ✅ Print-friendly (take screenshots directly!)
+
+**How to view:**
+```bash
+# Open in browser
+open docs/VISUAL_MOCKUPS.html
+
+# Or start local server
+cd docs
+python3 -m http.server 8000
+# Then visit: http://localhost:8000/VISUAL_MOCKUPS.html
+```
+
+---
+
+## 📸 Real Screenshots (To Be Added After Deployment)
+
+This file documents where actual screenshots will be added once the application is deployed and running.
+
 ## Table of Contents
 
 1. [Customer App Screenshots (32)](#customer-app-screenshots)
